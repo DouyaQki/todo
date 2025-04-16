@@ -8,8 +8,19 @@ export interface I_Todo {
 export type T_TODO_LIST = I_Todo[] | [];
 
 // NewTodo
-export interface I_PROPS {
-    data?: T_TODO_LIST;
-    handleSetData: (data: I_Todo) => void;
-  }
-  
+export interface I_NEW_TODO {
+  handleUserInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  userInput: string;
+  createTodo: () => void;
+  editMode: boolean;
+  confirmEdit: () => void;
+}
+
+// TodoList component
+export interface I_TODO_LIST {
+  data: T_TODO_LIST;
+  editCheckBox: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  deleteTodo: (event: React.MouseEvent<HTMLImageElement>) => void;
+  editTodo: (event: React.MouseEvent<HTMLImageElement>) => void;
+  editMode: boolean;
+}

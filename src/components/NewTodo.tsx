@@ -1,38 +1,38 @@
-import { useState } from "react";
-import { I_PROPS } from "../types";
+import { I_NEW_TODO } from "../types";
 
-function NewTodo({ handleSetData }: I_PROPS) {
-  const [todoId, setTodoId] = useState<number>(0);
-  const [userInput, setUserInput] = useState<string>("");
-
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInput(event.target.value)
-  };
-
-  // new id
-  const assignId = () => setTodoId((prev) => prev + 1);
+function NewTodo({
+  handleUserInput,
+  userInput,
+  createTodo,
+  editMode,
+  confirmEdit,
   
-  function createTodo() {
-    assignId();
-    // new todo
-    const NEW_TODO = {
-      id: todoId,
-      task: userInput,
-      done: false,
-    };
-    
-    handleSetData(NEW_TODO);
-  }
-
+}: I_NEW_TODO) {
+  const CREATE_TODO_OR_EDIT_MODE = editMode ? (
+    <button
+      onClick={confirmEdit}
+      className="w-24 outline-none select-none p-2 transition duration-300 hover:bg-[#3e5682]"
+    >
+      CONFIRM
+    </button>
+  ) : (
+    <button
+      onClick={createTodo}
+      className="w-24 outline-none select-none p-2 transition duration-300 hover:bg-[#3e5682]"
+    >
+      CREATE
+    </button>
+  );
   return (
-    <section className="flex">
+    <section className="flex border-1 border-[#3e5682] rounded-bl-md rounded-tl-md h-12 my-4">
       <input
         type="text"
-        className="bg-[#171717]"
+        className="w-full outline-none pl-3"
         placeholder="CREATE A NEW TODO"
-        onChange={handleOnChange}
+        value={userInput}
+        onChange={handleUserInput}
       />
-      <button onClick={createTodo}>CREATE</button>
+      {CREATE_TODO_OR_EDIT_MODE}
     </section>
   );
 }
