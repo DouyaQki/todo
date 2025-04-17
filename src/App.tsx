@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import NewTodo from "./components/NewTodo";
 import TodoList from "./components/TodoList";
 import { T_TODO_LIST, I_Todo } from "./types";
@@ -96,8 +96,18 @@ function App() {
     handleClearInput();
   };
 
+  // CLEAN TODOS
+
+  const SOME_TODO_TO_CLEAN = data.some(({done}) => done)
+
+  const cleanUpTasks = () => {
+    const FILTERED_DATA = data.filter(({done}) => !done);
+
+    setData(FILTERED_DATA);
+  };
+
   return (
-    <main className="text-[#e3eeee] p-4">
+    <main className="text-[#e3eeee] p-4 md:w-3xl">
       <h1 className="text-5xl">TODO</h1>
       <NewTodo
         handleUserInput={handleUserInput}
@@ -113,6 +123,12 @@ function App() {
         editTodo={editTodo}
         editMode={editMode}
       />
+      {SOME_TODO_TO_CLEAN && <button
+        onClick={cleanUpTasks}
+        className="w-full border-1 border-[#3e5682] rounded-md p-2 mt-4 transition duration-300 hover:bg-[#3e5682]"
+      >
+        Clean up all completed tasks
+      </button>}
     </main>
   );
 }
