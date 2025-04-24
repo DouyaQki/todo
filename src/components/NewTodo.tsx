@@ -1,24 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
-import { createTodo, confirmUpdate } from "../store/crud/crudSlice";
-import { inputOnchange, cleanInput } from "../store/input/inputSlice";
-import { RootState } from "../store/store";
+// redux
+import useRedux from "../useRedux";
+// react
 import { useRef } from "react";
 
-const TAILWIND_STYLES = {
-  SECTION:
-    "flex border-1 border-[#3e5682] rounded-bl-md rounded-tl-md h-12 my-4",
-  BUTTON:
-    "w-24 outline-none select-none p-2 transition duration-300 hover:bg-[#3e5682]",
-  INPUT_TEXT: "w-full outline-none pl-3",
-};
+// styles
+import { TAILWIND_STYLES } from "../tailwindStyles";
 
 function NewTodo() {
-  const todo = useSelector((state: RootState) => state.crudSlice);
-  const userInput = useSelector((state: RootState) => state.inputSlice.input);
-
+  const {
+    dispatch,
+    userInput,
+    createTodo,
+    confirmUpdate,
+    cleanInput,
+    todo,
+    toggle,
+    inputOnchange,
+  } = useRedux();
+  
+  const DISPLAY = "";
+  const PLACEHOLDER = "CREATE A NEW TODO";
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const dispatch = useDispatch();
 
   const isEditorMode = todo.some((element) => element.index !== -1);
 
@@ -28,6 +30,16 @@ function NewTodo() {
 
     dispatch(confirmUpdate([editedTodoIndex, inputRef.current!.value]));
     dispatch(cleanInput());
+    dispatch(toggle(DISPLAY));
+  };
+
+  const create = () => {
+    dispatch(createTodo(userInput));
+    dispatch(cleanInput());
+  };
+
+  const input = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(inputOnchange(event));
   };
 
   const CONFIRM_BUTTON = (
@@ -37,28 +49,24 @@ function NewTodo() {
   );
 
   const CREATE_BUTTON = (
-    <button
-      className={TAILWIND_STYLES.BUTTON}
-      onClick={() => {
-        dispatch(createTodo(userInput));
-        dispatch(cleanInput());
-      }}
-    >
+    <button className={TAILWIND_STYLES.BUTTON} onClick={create}>
       CREATE
     </button>
   );
+
+  const BUTTON = isEditorMode ? CONFIRM_BUTTON : CREATE_BUTTON;
 
   return (
     <section className={TAILWIND_STYLES.SECTION}>
       <input
         type="text"
         className={TAILWIND_STYLES.INPUT_TEXT}
-        placeholder="CREATE A NEW TODO"
+        placeholder={PLACEHOLDER}
         value={userInput}
         ref={inputRef}
-        onChange={(event) => dispatch(inputOnchange(event))}
+        onChange={input}
       />
-      {isEditorMode ? CONFIRM_BUTTON : CREATE_BUTTON}
+      {BUTTON}
     </section>
   );
 }

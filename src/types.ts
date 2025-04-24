@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 // App
 export interface I_Todo {
   id: number;
@@ -23,4 +25,15 @@ export interface I_TODO_LIST {
   deleteTodo: (event: React.MouseEvent<HTMLImageElement>) => void;
   editTodo: (event: React.MouseEvent<HTMLImageElement>) => void;
   editMode: boolean;
+}
+
+export interface CB_DATA {
+  (
+    {
+      task,
+      id,
+      editorMode,
+    }: { task: string; id: string; editorMode: boolean },
+    index: number
+  ): JSX.Element;
 }

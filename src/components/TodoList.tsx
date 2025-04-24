@@ -1,74 +1,67 @@
+// types
+import { CB_DATA } from "../types";
+// react
 import { JSX } from "react";
+// images
 import edit from "../assets/edit.svg";
 import deleteIcon from "../assets/delete.svg";
 // redux
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
-import {
-  todo,
-  deleteTodo,
-  updateTodoIndex,
-} from "../../src/store/crud/crudSlice";
+import useRedux from "../useRedux";
 
-import { updateCheck } from "../../src/store/crud/crudSlice";
-import { sendToInput } from "../store/input/inputSlice";
-// <ul> style
-const UL_STYLE =
-  "h-96 overflow-y-auto  [&::-webkit-scrollbar]:w-2  [&::-webkit-scrollbar-track]:bg-gray-100  [&::-webkit-scrollbar-thumb]:bg-gray-300  dark:[&::-webkit-scrollbar-track]:bg-neutral-700  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500";
-
-const CHECKBOX_STYLE = "h-5 w-5";
-
-const LI_STYLE = {
-  li: "h-12 border-b-1 flex items-center gap-3 py-2",
-  label: "flex w-full items-center gap-3",
-  p: "text-[1.25rem]",
-  img: "h-full select-none transition duration-300 hover:bg-[#3e5682]",
-  checkbox: "h-5 w-5",
-};
+// styles
+import { LI_STYLE, CHECKBOX_STYLE, UL_STYLE } from "../tailwindStyles";
 
 function TodoList() {
-  const todoList = useSelector((state: RootState) => state.crudSlice);
-  const dispatch = useDispatch();
+  const {
+    dispatch,
+    todo,
+    display,
+    deleteTodo,
+    updateTodoIndex,
+    updateCheck,
+    sendToInput,
+    toggle,
+  } = useRedux();
 
-  const CB_DATA = ({ task, id, editorMode }: todo, index: number) => {
-    const EDIT_AND_DELETE = editorMode ? null : (
-      <>
-        <img
-          src={edit}
-          alt="edit todo"
-          className={LI_STYLE.img}
-          onClick={() => {
-            dispatch(updateTodoIndex(index));
-            dispatch(sendToInput(task));
-          }}
-        />
-        <img
-          src={deleteIcon}
-          alt="delete todo"
-          className={LI_STYLE.img}
-          onClick={() => dispatch(deleteTodo(index))}
-        />
-      </>
-    );
+  const HIDE = " hidden";
+
+  const CB_DATA: CB_DATA = ({ task, id, editorMode }, index) => {
     return (
       <li key={id} className={LI_STYLE.li}>
         <label className={LI_STYLE.label}>
           <input
             type="checkbox"
-            className={CHECKBOX_STYLE}
+            className={CHECKBOX_STYLE + display.display}
             onChange={() => dispatch(updateCheck(index))}
           />
           <p className={LI_STYLE.p}>{editorMode ? null : task}</p>
         </label>
-        {EDIT_AND_DELETE}
+        <img
+          src={edit}
+          alt="edit todo"
+          className={LI_STYLE.img + display.display}
+          onClick={() => {
+            dispatch(updateTodoIndex(index));
+            dispatch(sendToInput(task));
+            dispatch(toggle(HIDE));
+          }}
+        />
+        <img
+          src={deleteIcon}
+          alt="delete todo"
+          className={LI_STYLE.img + display.display}
+          onClick={() => dispatch(deleteTodo(index))}
+        />
       </li>
     );
   };
-  const LIST_OF_TODOS: JSX.Element[] = todoList.map(CB_DATA);
+  const LIST_OF_TODOS: JSX.Element[] = todo.map(CB_DATA);
 
-  const IF_DATA_EXISTS: boolean = todoList.length >= 1 ? true : false;
+  const IF_DATA_EXISTS: boolean = todo.length >= 1 ? true : false;
 
-  return <ul className={UL_STYLE}>{IF_DATA_EXISTS && LIST_OF_TODOS}</ul>;
+  const TODO = IF_DATA_EXISTS && LIST_OF_TODOS;
+
+  return <ul className={UL_STYLE}>{TODO}</ul>;
 }
 
 export default TodoList;
