@@ -38,14 +38,7 @@ const crudSlice = createSlice({
       return NEW_TODO;
     },
     updateCheck(state, action: PayloadAction<number>) {
-      const checked = state[action.payload].done;
-
-      if (checked) {
-        state[action.payload].done = false;
-        return;
-      }
-
-      state[action.payload].done = true;
+      state[action.payload].done = !state[action.payload].done;
     },
     deleteTodo(state, action: PayloadAction<number>) {
       const filteredTodo = state.filter(
@@ -54,27 +47,27 @@ const crudSlice = createSlice({
 
       return filteredTodo;
     },
-    deleteChecked(state) {
-      const filterChecked = state.filter(({ done }) => !done);
+    deleteAll(state) {
+      state = [];
 
-      return filterChecked;
+      return state;
     },
-    updateTodoIndex(state, action: PayloadAction<number>) {
-      state[action.payload].index = action.payload;
-      state[action.payload].editorMode = true
+    updateTodoIndex(state, action: PayloadAction<[number, boolean]>) {
+      state[action.payload[0]].index = action.payload[0];
+      state[action.payload[0]].editorMode = action.payload[1];
       // mandar el todo al input
     },
-    confirmUpdate(state, action: PayloadAction<[number, string]>) {
-      const userInput = action.payload[1].trim();
+    // confirmUpdate(state, action: PayloadAction<[number, string]>) {
+    //   const userInput = action.payload[1].trim();
 
-      const NO_INPUT = userInput.length === 0;
+    //   const NO_INPUT = userInput.length === 0;
 
-      if (NO_INPUT) return;
+    //   if (NO_INPUT) return;
 
-      state[action.payload[0]].task = userInput;
-      state[action.payload[0]].index = -1;
-      state[action.payload[0]].editorMode = false;
-    },
+    //   state[action.payload[0]].task = userInput;
+    //   state[action.payload[0]].index = -1;
+    //   state[action.payload[0]].editorMode = false;
+    // },
   },
 });
 
@@ -82,8 +75,8 @@ export const {
   createTodo,
   updateCheck,
   deleteTodo,
-  deleteChecked,
+  deleteAll,
   updateTodoIndex,
-  confirmUpdate,
+  // confirmUpdate,
 } = crudSlice.actions;
 export default crudSlice.reducer;

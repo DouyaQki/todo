@@ -1,28 +1,27 @@
 // component: App
-const MAIN_STYLE = "text-[#e3eeee] p-4 md:w-3xl";
-const CLEAR_BUTTON_STYLE =
-  "w-full border-1 border-[#3e5682] rounded-md p-2 mt-4 transition duration-300 hover:bg-[#3e5682]";
+const MAIN_STYLE = "h-full flex flex-col justify-start items-stretch text-[#e3eeee] p-4 md:w-3xl";
+const CLEAR_BUTTON_STYLE = "px-16 py-2 bold border-1 border-[#d0727266] rounded-md";
 const H1_TITLE = "text-5xl";
 
 // component: NewTodo
 const TAILWIND_STYLES = {
   SECTION:
-    "flex border-1 border-[#3e5682] rounded-bl-md rounded-tl-md h-12 my-4",
-  BUTTON:
-    "w-24 outline-none select-none p-2 transition duration-300 hover:bg-[#3e5682]",
+    "flex border-1 border-[#3e5682] rounded-bl-md rounded-tl-md h-12 my-4 shadow-[0px_0px_17px_-5px_rgba(0,_0,_0,_0.8)]",
+  BUTTON: "h-12 outline-none select-none p-2",
   INPUT_TEXT: "w-full outline-none pl-3",
 };
 
 // component: TodoList
+
 const LI_STYLE = {
-  li: "h-12 border-b-1 flex items-center gap-3 py-2",
-  label: "flex w-full items-center gap-3",
-  p: "text-[1.25rem]",
-  img: "h-full select-none transition duration-300 hover:bg-[#3e5682]",
-  checkbox: "h-5 w-5",
+  //h-10
+  li: " cursor-pointer backdrop-blur-[5px] bg-[#d5cfc01A] shadow-[0px_0px_5px_0px_rgba(255,_255,_255,_0.10)] rounded-md flex justify-start items-end gap-3 p-2 my-3 transition duration-500 hover:backdrop-blur-[5px] hover:bg-[#d5cfc033] hover:shadow-[0px_0px_15px_1px_rgba(255,_255,_255,_0.10)]",
+  label: "w-full flex justify-center items-center gap-3",
+  p: " cursor-pointer w-full font-semibold field-sizing-content  resize-none outline-none",
+  img: "h-[1.5rem] select-none",
 };
-const CHECKBOX_STYLE = "h-5 w-5";
-const UL_STYLE = `h-96 overflow-y-auto  [&::-webkit-scrollbar]:w-2  [&::-webkit-scrollbar-track]:bg-gray-100  [&::-webkit-scrollbar-thumb]:bg-gray-300  dark:[&::-webkit-scrollbar-track]:bg-neutral-700  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500`
+
+const UL_STYLE = `min-w-80 [&::-webkit-scrollbar]:w-2  [&::-webkit-scrollbar-track]:bg-gray-100  [&::-webkit-scrollbar-thumb]:bg-gray-300  dark:[&::-webkit-scrollbar-track]:bg-neutral-700  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500`;
 
 export {
   MAIN_STYLE,
@@ -30,6 +29,5 @@ export {
   H1_TITLE,
   TAILWIND_STYLES,
   LI_STYLE,
-  CHECKBOX_STYLE,
-  UL_STYLE
+  UL_STYLE,
 };

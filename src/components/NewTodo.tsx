@@ -2,7 +2,6 @@
 import useRedux from "../useRedux";
 // react
 import { useRef } from "react";
-
 // styles
 import { TAILWIND_STYLES } from "../tailwindStyles";
 
@@ -11,27 +10,29 @@ function NewTodo() {
     dispatch,
     userInput,
     createTodo,
-    confirmUpdate,
     cleanInput,
-    todo,
-    toggle,
     inputOnchange,
+    display,
+    todo,
   } = useRedux();
-  
-  const DISPLAY = "";
-  const PLACEHOLDER = "CREATE A NEW TODO";
+
+  const editorMode = todo.some(({ editorMode }) => editorMode);
+  const todosDone = todo.filter(({ done }) => done).length;
+
+  const todosDoneMessage = ` / Done: ${todosDone}`;
+
+  const NO_PLACEHOLDER = "";
+  const HIDDEN = " hidden";
+  const INVISIBLE = "invisible";
+
+  const disableInput = display.display === HIDDEN ? true : false;
+
+  const PLACEHOLDER = "New todo";
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const isEditorMode = todo.some((element) => element.index !== -1);
-
-  const editorMode = () => {
-    const editedTodoIndex = todo.filter((element) => element.index !== -1)[0]
-      .index;
-
-    dispatch(confirmUpdate([editedTodoIndex, inputRef.current!.value]));
-    dispatch(cleanInput());
-    dispatch(toggle(DISPLAY));
-  };
+  const inputPlaceholder = editorMode
+    ? NO_PLACEHOLDER
+    : PLACEHOLDER + todosDoneMessage;
 
   const create = () => {
     dispatch(createTodo(userInput));
@@ -42,31 +43,23 @@ function NewTodo() {
     dispatch(inputOnchange(event));
   };
 
-  const CONFIRM_BUTTON = (
-    <button className={TAILWIND_STYLES.BUTTON} onClick={editorMode}>
-      CONFIRM
-    </button>
-  );
-
-  const CREATE_BUTTON = (
-    <button className={TAILWIND_STYLES.BUTTON} onClick={create}>
-      CREATE
-    </button>
-  );
-
-  const BUTTON = isEditorMode ? CONFIRM_BUTTON : CREATE_BUTTON;
-
   return (
-    <section className={TAILWIND_STYLES.SECTION}>
+    <section className={editorMode ? INVISIBLE : TAILWIND_STYLES.SECTION}>
       <input
         type="text"
         className={TAILWIND_STYLES.INPUT_TEXT}
-        placeholder={PLACEHOLDER}
+        placeholder={inputPlaceholder}
         value={userInput}
         ref={inputRef}
         onChange={input}
+        disabled={disableInput}
       />
-      {BUTTON}
+      <button
+        className={TAILWIND_STYLES.BUTTON + display.display}
+        onClick={create}
+      >
+        CREATE
+      </button>
     </section>
   );
 }

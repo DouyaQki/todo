@@ -3,9 +3,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./store/store";
 import { toggle } from "./store/display/displaySlice";
-import { createTodo, confirmUpdate } from "./store/crud/crudSlice";
+import { createTodo } from "./store/crud/crudSlice";
 import { inputOnchange, cleanInput } from "./store/input/inputSlice";
-import { deleteChecked } from "./store/crud/crudSlice";
+import { deleteAll } from "./store/crud/crudSlice";
 
 // todo [x]
 import {
@@ -32,13 +32,13 @@ function useRedux() {
     userInput,
     toggle,
     createTodo,
-    confirmUpdate,
+    // confirmUpdate,
     cleanInput,
     deleteTodo,
     updateTodoIndex,
     updateCheck,
     sendToInput,
-    deleteChecked
+    deleteAll
   };
 }
 

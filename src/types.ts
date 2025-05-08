@@ -33,7 +33,8 @@ export interface CB_DATA {
       task,
       id,
       editorMode,
-    }: { task: string; id: string; editorMode: boolean },
+      done
+    }: { task: string; id: string; editorMode: boolean; done?: boolean },
     index: number
   ): JSX.Element;
 }
