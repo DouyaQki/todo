@@ -10,7 +10,7 @@ import checkIcon from "../assets/check.svg";
 import useRedux from "../useRedux";
 
 // styles
-import { LI_STYLE, TAILWIND_STYLES, UL_STYLE } from "../tailwindStyles";
+import { LI_STYLE, UL_STYLE } from "../tailwindStyles";
 
 function TodoList() {
   const {
@@ -45,7 +45,7 @@ function TodoList() {
       <img
         src={checkIcon}
         alt="confirm"
-        className={TAILWIND_STYLES.BUTTON}
+        className={"border-l-2 rounded-md border-[#2a2a2a] transition duration-500 hover:bg-[#3e5682]"}
         onClick={() => changeEditorMode(false)}
       />
     ) : null;
