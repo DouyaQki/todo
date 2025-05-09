@@ -43,6 +43,11 @@ function NewTodo() {
     dispatch(inputOnchange(event));
   };
 
+  const pressEnterKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== "Enter") return;
+    create();
+  };
+
   return (
     <section className={editorMode ? INVISIBLE : TAILWIND_STYLES.SECTION}>
       <input
@@ -52,6 +57,7 @@ function NewTodo() {
         value={userInput}
         ref={inputRef}
         onChange={input}
+        onKeyUp={pressEnterKey}
         disabled={disableInput}
       />
       <button

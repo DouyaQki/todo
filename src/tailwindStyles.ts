@@ -1,13 +1,16 @@
 // component: App
-const MAIN_STYLE = "h-full flex flex-col justify-start items-stretch text-[#e3eeee] p-4 md:w-3xl";
-const CLEAR_BUTTON_STYLE = "px-16 py-2 bold border-1 border-[#d0727266] rounded-md";
+const MAIN_STYLE =
+  "h-full flex flex-col justify-start items-stretch text-[#e3eeee] p-4 md:w-3xl";
+const CLEAR_BUTTON_STYLE =
+  "px-16 py-2 bold border-1 border-[#d0727266] rounded-md";
 const H1_TITLE = "text-5xl";
 
 // component: NewTodo
 const TAILWIND_STYLES = {
   SECTION:
-    "flex border-1 border-[#3e5682] rounded-bl-md rounded-tl-md h-12 my-4 shadow-[0px_0px_17px_-5px_rgba(0,_0,_0,_0.8)]",
-  BUTTON: "h-12 outline-none select-none p-2",
+    "flex border-2 border-[#3e5682] rounded-bl-md rounded-tl-md h-12 my-4 shadow-[0px_0px_15px_-5px_#3e5682]",
+  BUTTON:
+    "border-l-3 border-[#3e5682] outline-none select-none px-4 transition duration-500 hover:backdrop-blur-[5px] hover:bg-[#3e5682]",
   INPUT_TEXT: "w-full outline-none pl-3",
 };
 
