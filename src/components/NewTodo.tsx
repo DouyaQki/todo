@@ -22,10 +22,9 @@ function NewTodo() {
   const todosDoneMessage = ` / Done: ${todosDone}`;
 
   const NO_PLACEHOLDER = "";
-  const HIDDEN = " hidden";
   const INVISIBLE = "invisible";
 
-  const disableInput = display.display === HIDDEN ? true : false;
+  // const disableInput = (display.display === HIDDEN ? true : false);
 
   const PLACEHOLDER = "New todo";
   const inputRef = useRef<HTMLInputElement>(null);
@@ -58,10 +57,13 @@ function NewTodo() {
         ref={inputRef}
         onChange={input}
         onKeyUp={pressEnterKey}
-        disabled={disableInput}
       />
       <button
-        className={TAILWIND_STYLES.BUTTON + display.display}
+        className={
+          editorMode
+            ? TAILWIND_STYLES.BUTTON + display.display
+            : TAILWIND_STYLES.BUTTON
+        }
         onClick={create}
       >
         CREATE
